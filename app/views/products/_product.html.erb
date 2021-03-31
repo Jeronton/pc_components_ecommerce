@@ -1,0 +1,14 @@
+<%# <div class="col-md-3"> %>
+  <div class="card">
+
+    <%# <% if product.image.present? %>
+    <%#   <%= image_tag product.image, class: 'card-img-top' %>
+    <%# <% end%>
+
+    <div class="card-body">
+      <h5 class="card-title"><%= link_to product.name, product%></h5>
+      <p class="card-text"><strong>Our low price: </strong><%= product.price.to_d / 100%></p>
+      <p class="card-text"><%= product.description%></p>
+    </div>
+  </div>
+<%# </div> %>
