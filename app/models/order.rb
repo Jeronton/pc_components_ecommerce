@@ -1,8 +1,7 @@
-class Province < ApplicationRecord
-  has_many :customers
+class Order < ApplicationRecord
+  belongs_to :customer
 
-  validates :abbreviation, :name, presence: true
-  validates :PST, :GST, :HST, numericality: { allow_nil: true }
+  validates :customer, :total, :status, presence: true
   validate :has_a_tax
 
   def has_a_tax
