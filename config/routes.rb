@@ -1,3 +1,8 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :products, only: %i[index show]
+  resources :categories, only: %i[index]
+
+  # get 'products/index'
+  # get 'products/show'
+  # root to: "home#index"
 end
