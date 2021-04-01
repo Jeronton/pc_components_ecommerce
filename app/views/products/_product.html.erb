@@ -9,6 +9,7 @@
       <h5 class="card-title"><%= link_to product.name, product%></h5>
       <p class="card-text"><strong>Our low price: </strong><%= product.price.to_d / 100 %></p>
       <p class="card-text"><%= product.description%></p>
+      <p class="card-text"><strong>Category: </strong><%= product.category.name %></p>
     </div>
   </div>
 <%# </div> %>
