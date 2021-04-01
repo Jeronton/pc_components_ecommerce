@@ -1,4 +1,6 @@
 class Province < ApplicationRecord
+  has_many :customers
+
   validates :abbreviation, :name, presence: true
   validates :PST, :GST, :HST, numericality: { allow_nil: true }
   validate :has_a_field
