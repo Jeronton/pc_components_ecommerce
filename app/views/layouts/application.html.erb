@@ -13,6 +13,9 @@
   <body>
     <div class="container">
       <%= render partial: 'common/header' %>
+      <% if flash[:notice] %>
+        <p><%= flash[:notice] %></p>
+      <% end %>
       <%= yield %>
     </div>
   </body>

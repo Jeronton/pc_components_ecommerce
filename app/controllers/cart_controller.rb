@@ -12,7 +12,7 @@ class CartController < ApplicationController
     else
       flash[:notice] = "❌ Error adding item to the cart"
     end
-    redirect_to root_path
+    redirect_to products_path
   end
 
   def destroy
@@ -27,7 +27,7 @@ class CartController < ApplicationController
     else
       flash[:notice] = "❌ Error removing item from cart"
     end
-    redirect_to root_path
+    redirect_to products_path
   end
 
   def show; end
