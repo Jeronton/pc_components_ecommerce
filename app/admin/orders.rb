@@ -7,9 +7,9 @@ ActiveAdmin.register Order do
     # f.inputs          # builds an input field for every attribute
     f.inputs
     f.has_many :order_products do |o_f|
-      o_f.has_one :products do |p_f|
-        p_f.input :name
-      end
+      # # o_f.has_one :products do |p_f|
+      # f.input products: :name
+      # # end
       o_f.input :price
       o_f.input :quantity
     end
