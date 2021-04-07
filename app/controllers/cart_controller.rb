@@ -11,11 +11,12 @@ class CartController < ApplicationController
       puts "\n\n***************************************************************************************
       \n\nID is: #{id}\n QUANTITY IS: #{quantity} \nCART IS: #{session[:shopping_cart].inspect}\n\n\n
       *************************************************************************\n\n"
-      flash[:notice] = "✔ Added #{product.name} to the cart"
+      flash[:notice] = "✔ Added #{product.name} to the cart" unless params[:hide_flash] == "true"
+
     else
-      flash[:notice] = "❌ Error adding item to the cart"
+      flash[:notice] = "❌ Error adding item to the cart" unless params[:hide_flash] == "true"
     end
-    redirect_to products_path
+    redirect_to request.referer
   end
 
   def destroy
@@ -26,11 +27,11 @@ class CartController < ApplicationController
     # ensure that the id passed is valid.
     if product && product.valid?
       session[:shopping_cart].delete(id.to_s) # removes the id from the array
-      flash[:notice] = "✔ Removed #{product.name} from cart"
+      flash[:notice] = "✔ Removed #{product.name} from cart" unless params[:hide_flash] == "true"
     else
       flash[:notice] = "❌ Error removing item from cart"
     end
-    redirect_to products_path
+    redirect_to request.referer
   end
 
   def index
