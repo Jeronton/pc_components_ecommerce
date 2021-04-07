@@ -22,7 +22,6 @@ class CartController < ApplicationController
     # take in a params[:id] and remove that prodooct id to the session shopping cart
     logger.debug("removing #{params[:id]} from the shopping cart")
     id = params[:id].to_i
-    quantity = params[:quantity].to_i
     product = Product.find(id)
     # ensure that the id passed is valid.
     if product && product.valid?
@@ -34,5 +33,7 @@ class CartController < ApplicationController
     redirect_to products_path
   end
 
-  def show; end
+  def index
+    # asfd
+  end
 end
