@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  using ApplicationHelper
   before_action :initialize_session
   helper_method :cart
 
@@ -9,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def cart
-    # find will take one or a array and return a collection when passed and array.
-    Product.find(session[:shopping_cart])
+    # find will take one or a array and return a collections when passed and array.
+    ApplicationHelper::Cart.new(session[:shopping_cart])
   end
 end
