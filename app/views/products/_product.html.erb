@@ -1,6 +1,7 @@
-<%# <div class="col-md-3"> %>
+<% if show_card %>
   <div class="card">
     <div class="card-body">
+<% end %>
       <div class="row">
         <div class="col-md-3">
           <% if product.image_med.present? %>
@@ -10,7 +11,7 @@
         <div class="col-md-9">
           <h5 class="card-title"><%= link_to product.name, product%></h5>
           <p class="card-text"><strong>Our low price: </strong><%= number_to_currency(product.price.to_d / 100) %></p>
-          <% if show_desc %>
+          <% if show_desc.nil? %>
             <p class="card-text"><%= product.description%></p>
           <% end %>
           <p class="card-text"><strong>Category: </strong><%= product.category.name %></p>
@@ -29,6 +30,7 @@
           <% end %>
         </div>
       </div>
+<% if show_card %>
     </div>
   </div>
-<%# </div> %>
+<% end %>
