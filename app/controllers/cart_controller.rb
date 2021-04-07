@@ -34,6 +34,10 @@ class CartController < ApplicationController
   end
 
   def index
-    # asfd
+    @cart_items = []
+    cart.each do |id, quantity|
+      @cart_items << { product:  Product.find(id),
+                       quantity: quantity }
+    end
   end
 end

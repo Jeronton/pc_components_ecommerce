@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
     session[:shopping_cart] ||= {} # ||= means if nill then assign, otherwize not.
   end
 
-
   def cart
     # find will take one or a array and return a collections when passed and array.
     session[:shopping_cart]
