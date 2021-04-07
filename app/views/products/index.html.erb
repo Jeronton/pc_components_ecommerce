@@ -1,4 +1,6 @@
 <h1>Our Products</h1>
 <div>
-  <%= render @products %>
+  <%= render partial: 'product',
+             collection: @products,
+             locals: { show_desc: false, show_add_cart: false } %>
 </div>
