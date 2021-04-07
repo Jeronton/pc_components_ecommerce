@@ -8,7 +8,7 @@
       <p class="card-text"><strong>Our low price: </strong><%= product.price.to_d / 100 %></p>
       <p class="card-text"><%= product.description%></p>
       <p class="card-text"><strong>Category: </strong><%= product.category.name %></p>
-      <% if cart.products.include?(product) %>
+      <% if !cart[product.id.to_s].nil? %>
         <%= button_to cart_path(product), method: :delete do %>
           Remove From Cart
         <% end%>
