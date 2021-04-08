@@ -21,7 +21,7 @@ class CheckoutController < ApplicationController
 
     if cust.valid?
       # set the current customer to this customr
-      session[:customer] = cust
+      session[:customer_id] = cust.id
 
       redirect_to checkout_payment_path
     end

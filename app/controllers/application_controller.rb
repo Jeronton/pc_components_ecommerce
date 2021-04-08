@@ -23,4 +23,13 @@ class ApplicationController < ActionController::Base
     end
     cart_items
   end
+
+  # Gets the products from the session cart formated as an array of products
+  def cart_products
+    cart_products = []
+    cart.each do |id, quantity|
+      cart_products << Product.find(id)
+    end
+    cart_products
+  end
 end
