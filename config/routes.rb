@@ -3,8 +3,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   resources :products, only: %i[index show]
   resources :categories, only: %i[index]
-
-  # get 'products/index'
+  resources :cart, only: %i[create destroy index]
   # get 'products/show'
-  # root to: "home#index"
+  root to: "products#index"
 end

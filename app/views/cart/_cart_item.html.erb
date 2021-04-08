@@ -1,0 +1,30 @@
+
+<div class="card">
+  <div class="card-body">
+      <%= render partial: 'products/product',
+                  object: cart_item[:product],
+                  locals: { show_desc: true, show_add_cart: false, show_card: false } %>
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-9">
+          <div class="form-group row">
+            <%= form_with url: cart_index_path, method: :post, class: "cal-md-auto form-group row" do |form| %>
+              <%= hidden_field_tag(:id, cart_item[:product].id)%>
+              <%= hidden_field_tag(:hide_flash, true )%>
+              <%= form.number_field :quantity, in: 1..999, class: "col-sm-3 form_control", value: cart_item[:quantity] %>
+              <div class="col-sm-auto">
+                <%= button_tag 'Update Quantity', class: "btn btn-secondary" %>
+              </div>
+            <%end%>
+            <div class="col-md-auto">
+              <%= form_with url: cart_path(cart_item[:product]), method: :delete do |form| %>
+                <%= hidden_field_tag(:hide_flash, true )%>
+                <%= button_tag 'Remove From Card', class: "btn btn-secondary" %>
+              <% end %>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
