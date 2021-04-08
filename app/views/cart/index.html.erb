@@ -1,6 +1,13 @@
 
 <h1>Your Cart</h1>
-<div>
-  <%= render partial: 'cart_item',
-             collection: @cart_items %>
+<div class="row">
+  <div class="col-md-9">
+    <%= render partial: 'cart_item',
+              collection: @cart_items %>
+  </div>
+  <div class="col-md-3">
+    <%= button_to order_path(product), method: :delete do %>
+      Remove From Cart
+    <% end%>
+  </div>
 </div>
