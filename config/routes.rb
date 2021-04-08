@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get "checkout/shipping"
   get "checkout/payment"
+  post "checkout/apply_shipping"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :products, only: %i[index show]

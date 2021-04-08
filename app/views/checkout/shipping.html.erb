@@ -1,2 +1,49 @@
-<h1>Checkout#shipping</h1>
-<p>Find me in app/views/checkout/shipping.html.erb</p>
+<div class="container">
+  <%= form_with model:  @customer, url: checkout_apply_shipping_path, method: :post do |form| %>
+    <div class="input-group">
+      <%= form.label :first_name, class: "input-group-text" %>
+      <%= form.text_field :first_name, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :middle_name, class: "input-group-text" %>
+      <%= form.text_field :middle_name, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :last_name, class: "input-group-text" %>
+      <%= form.text_field :last_name, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :address_line1, class: "input-group-text" %>
+      <%= form.text_field :address_line1, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :address_line2, class: "input-group-text" %>
+      <%= form.text_field :address_line2, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :country, class: "input-group-text" %>
+      <%= form.text_field :country, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :province_id, class: "input-group-text" %>
+      <%= form.collection_select  :province_id, Province.all, :id, :name, class: "custom-select", prompt: true %>
+    </div>
+    <div class="input-group">
+      <%= form.label :city, class: "input-group-text" %>
+      <%= form.text_field :city, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :postal, class: "input-group-text" %>
+      <%= form.text_field :postal, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :email, class: "input-group-text" %>
+      <%= form.email_field :email, class: "form-control" %>
+    </div>
+    <div class="input-group">
+      <%= form.label :phone, class: "input-group-text" %>
+      <%= form.phone_field :phone, class: "form-control" %>
+    </div>
+    <%= button_tag 'Use this shipping info', class: "btn btn-primary" %>
+  <%end%>
+</div>

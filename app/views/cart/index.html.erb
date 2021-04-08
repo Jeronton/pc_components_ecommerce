@@ -6,8 +6,8 @@
               collection: @cart_items %>
   </div>
   <div class="col-md-3">
-    <%= button_to order_path(product), method: :delete do %>
-      Remove From Cart
+    <%= button_to checkout_shipping_path, method: :get, class: "btn btn-primary" do %>
+      Checkout
     <% end%>
   </div>
 </div>
