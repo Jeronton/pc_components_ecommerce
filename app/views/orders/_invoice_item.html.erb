@@ -1,0 +1,18 @@
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3">
+        <% if orderProduct.product.image_med.present? %>
+          <%= image_tag orderProduct.product.image_med, class: 'img-thumbnail float-left' %>
+        <% end%>
+      </div>
+      <div class="col-md-9">
+        <h5 class="card-title"><%= link_to orderProduct.product.name, orderProduct.product%></h5>
+        <p class="card-text"><strong>price: </strong><%= number_to_currency(orderProduct.price.to_d / 100) %></p>
+        <p class="card-text"><strong>quantity: </strong><%= orderProduct.quantity %></p>
+      </div>
+    </div>
+  </div>
+</div>
+

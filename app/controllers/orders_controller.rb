@@ -1,7 +1,17 @@
 class OrdersController < ApplicationController
   def index; end
 
-  def show; end
+  def show
+    order = Order.find(params[:id])
+    if order.customer.id == session[:customer_id]
+      @orderProducts = order.order_products
+      @total = order.total
+      @pst = order.PST
+      @gst = order.GST
+      @hst = order.HST
+      @subtotal = @total - @pst - @gst - @hst
+    end
+  end
 
   def create
     @items = cart_items
@@ -52,6 +62,8 @@ class OrdersController < ApplicationController
         GST:    gst,
         HST:    hst
       )
+
+      redirect_to(order) if order.valid?
     end
   end
 end
