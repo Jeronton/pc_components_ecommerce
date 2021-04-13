@@ -10,8 +10,26 @@ class ApplicationController < ActionController::Base
   end
 
   def cart
-    # find will take one or a array and return a collections when passed and array.
     session[:shopping_cart]
-    # ApplicationHelper::Cart.new(session[:shopping_cart])
+  end
+
+  # Gets the items from the session cart formated as an array of
+  # hashes with product: the product, quantity: the quantity of products.
+  def cart_items
+    cart_items = []
+    cart.each do |id, quantity|
+      cart_items << { product:  Product.find(id),
+                      quantity: quantity }
+    end
+    cart_items
+  end
+
+  # Gets the products from the session cart formated as an array of products
+  def cart_products
+    cart_products = []
+    cart.each do |id, quantity|
+      cart_products << Product.find(id)
+    end
+    cart_products
   end
 end

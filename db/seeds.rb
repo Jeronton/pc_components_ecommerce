@@ -52,8 +52,21 @@ graphicscategory.products.create(name: "NVIDIA GTX 1050", description: "
 ",
   price: 111_111)
 
+#  Add Provinces
 mb = Province.create(abbreviation: "MB", name: "Manitoba", PST: 0.07, GST: 0.05)
 ab = Province.create(abbreviation: "AB", name: "Alberta", GST: 0.05)
+
+mb = Province.create(abbreviation: "BC", name: "British Columbia", PST: 0.07, GST: 0.05)
+mb = Province.create(abbreviation: "NB", name: "New Brunswick", HST: 0.15)
+mb = Province.create(abbreviation: "NL", name: "Newfoundland and Labrador", HST: 0.15)
+mb = Province.create(abbreviation: "NT", name: "Northwest Territories", GST: 0.05)
+mb = Province.create(abbreviation: "NS", name: "Nova Scotia", HST: 0.15)
+mb = Province.create(abbreviation: "NU", name: "Nunavut", GST: 0.05)
+mb = Province.create(abbreviation: "ON", name: "Ontario", HST: 0.13)
+mb = Province.create(abbreviation: "PE", name: "Prince Edward Island", HST: 0.15)
+mb = Province.create(abbreviation: "QC", name: "Quebec", PST: 0.09975, GST: 0.05)
+mb = Province.create(abbreviation: "SK", name: "Saskatchewan", PST: 0.06, GST: 0.05)
+mb = Province.create(abbreviation: "YT", name: "Yukon", GST: 0.05)
 
 jeremy = mb.customers.create(first_name: "Jeremy", last_name: "Grift", phone: "204-222-3333",
   email: "jeremy@test.com", country: "Canada", city: "Anola", address_line1: "123 somewhere st", postal: "A1B2C3")
@@ -61,8 +74,8 @@ jeremy = mb.customers.create(first_name: "Jeremy", last_name: "Grift", phone: "2
 ab.customers.create(first_name: "Bob", last_name: "Jones", phone: "204-222-5555",
   email: "bob@test.com", country: "Canada", city: "City", address_line1: "321 somewhere st", postal: "H6B2Y3")
 
-order = jeremy.orders.create(total: 1234, status: "Pending", HST: 11)
-OrderProduct.create(order: order, product: cpu, price: 1234, quantity: 1)
+# order = jeremy.orders.create(total: 1234, status: "Pending", HST: 11)
+# OrderProduct.create(order: order, product: cpu, price: 1234, quantity: 1)
 
 puts "Created #{Product.all.count} Products."
 puts "Created #{Category.all.count} Categories."

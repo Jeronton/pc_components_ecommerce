@@ -1,6 +1,13 @@
 
 <h1>Your Cart</h1>
-<div>
-  <%= render partial: 'cart_item',
-             collection: @cart_items %>
+<div class="row">
+  <div class="col-md-9">
+    <%= render partial: 'cart_item',
+              collection: @cart_items %>
+  </div>
+  <div class="col-md-3">
+    <%= button_to checkout_shipping_path, method: :get, class: "btn btn-primary" do %>
+      Checkout
+    <% end%>
+  </div>
 </div>
