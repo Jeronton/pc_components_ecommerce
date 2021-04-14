@@ -1,5 +1,5 @@
 <div class="container">
-  <%= form_with model:  customer, url: url, method: method do |form| %>
+  <%= form_with model:  customer, url: url, method: method, remote: true do |form| %>
     <div class="input-group">
       <%= form.label :first_name, class: "input-group-text" %>
       <%= form.text_field :first_name, class: "form-control" %>

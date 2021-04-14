@@ -2,42 +2,33 @@ class CheckoutController < ApplicationController
   def create
     # establish a connection with Stripe!
 
+    # at min 23 of second vid
+
     # redirect the user back to a payment screen
 
-    product = Product.find(params[:product_id])
+    productItems = []
+    cart_items.each do |item|
+      product = item[:product]
+      productItems << {
+        name:        product.name,
+        description: product.description,
+        amount:      product.price,
+        currency:    "cad",
+        quantity:    item[:quantity]
+      }
+    end
 
-    if product.nil?
-
-      redirect_to root_path
-
+    if productItems.size == 0
+      flash[:notice] = "❌ No items in cart to purchase."
+      redirect_to request.referer
       return
-
     end
 
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ["card"],
       success_url:          checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url:           checkout_cancel_url,
-      line_items:           [
-
-        {
-
-          name:        product.name,
-          description: product.description,
-          amount:      product.price_cents,
-          currency:    "cad",
-          quantity:    1
-        },
-
-        {
-          name:        "GST",
-          description: "Goods and Services Tax",
-          amount:      (product.price_cents * 0.05).to_i,
-          currency:    "cad",
-          quantity:    1
-        }
-
-      ]
+      line_items:           productItems
     )
 
     # @session.id <== is autopopulated from this process!

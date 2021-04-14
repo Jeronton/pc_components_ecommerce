@@ -3,4 +3,4 @@ Rails.configuration.stripe = {
   secret_key:      ENV["SECRET_KEY"]
 }
 # E NV[] hash allows us to access the OS environment variables!
-Stripe.api_key = Rails.configuration.stripe[:sevret_key]
+Stripe.api_key = Rails.configuration.stripe[:secret_key]
