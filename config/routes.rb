@@ -12,6 +12,13 @@ Rails.application.routes.draw do
   resources :orders, only: %i[index show create]
   resources :customers, only: %i[show new create]
 
+  # stripe routes
+  scope "/checkout" do
+    post "create", to: "checkout#create", as: "checkout_create"
+    get "success", to: "checkout#success", as: "checkout_success"
+    get "cancel", to: "checkout#cancel", as: "checkout_cancel"
+  end
+
   # get 'products/show'
   root to: "products#index"
 end
