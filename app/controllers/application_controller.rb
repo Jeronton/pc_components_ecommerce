@@ -35,6 +35,6 @@ class ApplicationController < ActionController::Base
 
   # Ovverride where redirected to after sign in.
   def after_sign_in_path_for(user)
-    categories_path
+    new_customer_path
   end
 end

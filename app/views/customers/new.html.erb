@@ -1,0 +1,8 @@
+
+<div class="container">
+  <p>Enter your shipping information to save you time at checkout!</p>
+  <%= render partial: 'form',
+            locals: { customer: Customer, url: customers_path, method: :create } %>
+
+
+</div>
