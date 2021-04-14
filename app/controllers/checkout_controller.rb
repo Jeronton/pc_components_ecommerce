@@ -6,10 +6,10 @@ class CheckoutController < ApplicationController
   def apply_shipping
     # puts inputs.inspect
     inputs = params[:customer]
-    province = if inputs[:customer_province_id].nil?
+    province = if inputs[:province_id].nil?
                  nil
                else
-                 Province.find(inputs[:customer_province_id])
+                 Province.find(inputs[:province_id])
                end
     cust = Customer.find_or_create_by(
       first_name:    inputs[:first_name],
@@ -32,6 +32,7 @@ class CheckoutController < ApplicationController
       redirect_to checkout_payment_path
 
     else
+      puts cust.errors.inspect
       redirect_to request.referer
     end
   end
