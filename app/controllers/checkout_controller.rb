@@ -1,5 +1,7 @@
 class CheckoutController < ApplicationController
-  def shipping; end
+  def shipping
+    @customer = user_signed_in? ? current_user.customer : Customer
+  end
 
   def payment; end
 
