@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
   belongs_to :province
+  belongs_to :user, optional: true
   has_many :orders
 
   validates :province, :first_name, :last_name, :email, :country, :city, :address_line1, :postal,

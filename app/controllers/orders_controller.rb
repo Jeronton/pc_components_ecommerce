@@ -45,7 +45,7 @@ class OrdersController < ApplicationController
         )
 
         # Add to total and taxes.
-        subtotal += product.price
+        subtotal += product.price * quantity
         pst += product.price * quantity * @customer.province.PST unless @customer.province.PST.nil?
         gst += product.price * quantity * @customer.province.GST unless @customer.province.GST.nil?
         hst += product.price * quantity * @customer.province.HST unless @customer.province.HST.nil?

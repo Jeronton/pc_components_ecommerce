@@ -32,4 +32,9 @@ class ApplicationController < ActionController::Base
     end
     cart_products
   end
+
+  # Ovverride where redirected to after sign in.
+  def after_sign_in_path_for(user)
+    new_customer_path
+  end
 end
