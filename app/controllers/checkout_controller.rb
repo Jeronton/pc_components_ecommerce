@@ -2,10 +2,6 @@ class CheckoutController < ApplicationController
   def create
     # establish a connection with Stripe!
 
-    # at min 23 of second vid
-
-    # redirect the user back to a payment screen
-
     productItems = []
     cart_items.each do |item|
       product = item[:product]
@@ -18,6 +14,7 @@ class CheckoutController < ApplicationController
       }
     end
 
+    # redirect user back as no items to purchase
     if productItems.size == 0
       flash[:notice] = "❌ No items in cart to purchase."
       redirect_to request.referer
@@ -39,13 +36,21 @@ class CheckoutController < ApplicationController
   end
 
   def success
-    # WE TOOK YO MONEY!
+    # Just display a trustful success page, it will asume that if navigated to it was indeed a success!
+    # but the payment will be validated, and the order's status updated using stripes events.
 
-    # stripe success_url +"?session_id={CHECKOUT_SESSION_ID}"
+    # @session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    # @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
 
-    @session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    # puts "\n\n\n******************************\n\n\n"
+    # puts @payment_intent.charges.data[0].class
+    # puts @payment_intent.charges.data[0].inspect
 
-    @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
+    # puts "\n\n\n******************************\n"
+    # charge = @payment_intent.charges.data[0]
+
+    # redirect to cancel if not paid
+    # redirect_to checkout_cancel_path unless charge.paid
   end
 
   def cancel
