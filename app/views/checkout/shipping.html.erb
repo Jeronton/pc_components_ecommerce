@@ -1,2 +1,5 @@
 <%= render partial: 'customers/form',
-             locals: { customer: @customer, url: checkout_apply_shipping_path, method: :post } %>
+             locals: { customer: @customer, url: orders_path, method: :create } %>
+
+ <%# locals: { customer: @customer, url: checkout_apply_shipping_path, method: :post } %>
+

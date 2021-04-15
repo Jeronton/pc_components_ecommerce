@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     session[:shopping_cart] ||= {} # ||= means if nill then assign, otherwize not.
   end
 
+  def clear_cart
+    session[:shopping_cart] = {}
+  end
+
   def cart
     session[:shopping_cart]
   end

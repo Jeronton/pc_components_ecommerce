@@ -1,18 +1,33 @@
-<h1>Order Invoice</h1>
+<h1>
+<% if @preOrder %>
+  Order Summary
+<% else %>
+  Order Invoice
+<% end %>
+</h1>
 <div class="card">
   <div class="card-head">
-    <div class="container">
-      <p>Sub-Total: <%= number_to_currency(@subtotal.to_d / 100) %></p>
-      <% unless @gst.nil? %>
-        <p>GST: <%= number_to_currency(@gst.to_d / 100) %></p>
+    <div class="container row">
+      <div class="col-md">
+        <p>Sub-Total: <%= number_to_currency(@subtotal.to_d / 100) %></p>
+        <% unless @gst.nil? %>
+          <p>GST: <%= number_to_currency(@gst.to_d / 100) %></p>
+        <% end %>
+        <% unless @pst.nil? %>
+          <p>PST: <%= number_to_currency(@pst.to_d / 100) %></p>
+        <% end %>
+        <% unless @hst.nil? %>
+          <p>HST: <%= number_to_currency(@hst.to_d / 100) %></p>
+        <% end %>
+        <p>Total: <%= number_to_currency(@total.to_d / 100) %></p>
+      </div>
+      <% if @preOrder %>
+        <div class="col-md">
+          <%= button_to checkout_create_path, method: :create, remote: true, class: "btn btn-primary" do %>
+            Proceed to Payment
+          <% end%>
+        </div>
       <% end %>
-      <% unless @pst.nil? %>
-        <p>PST: <%= number_to_currency(@pst.to_d / 100) %></p>
-      <% end %>
-      <% unless @hst.nil? %>
-        <p>HST: <%= number_to_currency(@hst.to_d / 100) %></p>
-      <% end %>
-      <p>Total: <%= number_to_currency(@total.to_d / 100) %></p>
     </div>
   </div>
   <div class="card-body">
@@ -20,5 +35,6 @@
           collection: @orderProducts,
           as: :orderProduct %>
   </div>
+
 </div>
 

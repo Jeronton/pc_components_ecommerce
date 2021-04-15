@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_010356) do
+ActiveRecord::Schema.define(version: 2021_04_15_163244) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_010356) do
     t.integer "HST"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "stripe_session"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 
@@ -131,6 +132,9 @@ ActiveRecord::Schema.define(version: 2021_04_14_010356) do
     t.decimal "HST"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "pst_tax_id"
+    t.string "gst_tax_id"
+    t.string "hst_tax_id"
   end
 
   create_table "users", force: :cascade do |t|

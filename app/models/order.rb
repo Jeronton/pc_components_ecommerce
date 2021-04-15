@@ -6,6 +6,7 @@ class Order < ApplicationRecord
 
   validates :customer, :total, :status, presence: true
   validate :has_a_tax
+  # validates :stripe_session, uniqueness: true
 
   def has_a_tax
     fields = %i[PST GST HST]
