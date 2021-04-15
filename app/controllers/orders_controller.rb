@@ -2,20 +2,30 @@ class OrdersController < ApplicationController
   def index; end
 
   def show
-    order = Order.find(params[:id])
-    if order.customer.id == session[:customer_id]
-      @orderProducts = order.order_products
-      @total = order.total
-      @pst = order.PST
-      @gst = order.GST
-      @hst = order.HST
+    @order = Order.find(params[:id])
+    if @order.customer.id == session[:customer_id]
+      @orderProducts = @order.order_products
+      @total = @order.total
+      @pst = @order.PST
+      @gst = @order.GST
+      @hst = @order.HST
       @subtotal = @total - @pst - @gst - @hst
+      @linkToPayment = @order.status == "unsubmitted"
     end
   end
 
   def create
     @items = cart_items
-    @customer = Customer.find(session[:customer_id])
+
+    @customer = Customer.find(session[:customer_id]) unless session[:customer_id].nil?
+
+    if @items.nil? || @items.size == 0
+      flash[:notice] = "❌ Must have at least one item to prepare order."
+      redirect_to request.referer
+    elsif @customer.nil?
+      flash[:notice] = "❌ Error fetching shipping details for order."
+      redirect_to request.referer
+    end
 
     # where the total/taxes will be stored
     subtotal = 0
@@ -57,7 +67,7 @@ class OrdersController < ApplicationController
       # Update the order with the calculated totals
       order.update(
         total:  total,
-        status: "pending",
+        status: "unsubmitted",
         PST:    pst,
         GST:    gst,
         HST:    hst
