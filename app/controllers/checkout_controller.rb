@@ -1,4 +1,9 @@
 class CheckoutController < ApplicationController
+  # constants
+  TYPE_GST = "GST".freeze
+  TYPE_PST = "PST".freeze
+  TYPE_HST = "HST".freeze
+
   def create
     # get the in progress order
     order = Order.find(session[:order_id])
@@ -8,38 +13,83 @@ class CheckoutController < ApplicationController
     # puts orderedProducts.inspect
     # puts "\n\n***********\n\n"
 
-    # set the tax rate(s)
+    # get the tax rate(s)
     tax_ids = []
     province = order.customer.province
-    if !province.GST.nil? && province.GST != 0.0
-      gst_rate = Stripe::TaxRate.create({
-                                          display_name: "GST",
-                                          inclusive:    false,
-                                          percentage:   province.GST * 100,
-                                          country:      "CA",
-                                          state:        province.abbreviation
-                                        })
-      tax_ids << gst_rate.id
+
+    # puts "\n\n\n**********************\n\n"
+    # puts "nil: #{province.GST.nil?}"
+    # puts "gst: #{province.GST.to_d}"
+    # puts "0d: #{0.0.to_d}"
+    # puts "is 0?: #{province.GST.to_d != 0.0.to_d}"
+    # puts "province gst id: #{province.gst_tax_id}"
+    if !province.GST.nil? && province.GST.to_d != 0.0.to_d
+      gst_tax = nil
+      # province has GST, so get its id, or make it if null
+      if province.gst_tax_id.nil? || province.gst_tax_id == ""
+        # has no tax created yet, so create
+        gst_tax = createProvinceTax(province, TYPE_GST)
+      else
+        # retrieve the tax from stripe
+        gst_tax = Stripe::TaxRate.retrieve(province.gst_tax_id)
+        # puts "old gst id: #{gst_tax.id}"
+        if gst_tax.nil?
+          # the id is no longer valid, for example if manually delete from stripe dashboard
+          gst_tax = createProvinceTax(province, TYPE_GST)
+        elsif gst_tax.percentage.to_d != province.GST.to_d * 100
+          # we changed the tax rate in our database (or in stripe), so update them to be the same.
+          gst_tax = updateProvinceTax(province, TYPE_GST, gst_tax)
+        end
+      end
+
+      # puts "new gst id: #{gst_tax.id}"
+      # puts "new province gst id: #{province.gst_tax_id}"
+      # finally add the tax id!
+      tax_ids << gst_tax.id
+
+      # puts "\n\n**********************\n\n"
     end
-    if !province.PST.nil? && province.PST != 0.0
-      pst_rate = Stripe::TaxRate.create({
-                                          display_name: "PST",
-                                          inclusive:    false,
-                                          percentage:   province.PST * 100,
-                                          country:      "CA",
-                                          state:        province.abbreviation
-                                        })
-      tax_ids << pst_rate.id
+
+    # get any pst
+    if !province.PST.nil? && province.PST.to_d != 0.0.to_d
+      pst_tax = nil
+      if province.pst_tax_id.nil? || province.pst_tax_id == ""
+        # has no tax created yet, so create
+        pst_tax = createProvinceTax(province, TYPE_PST)
+      else
+        # retrieve the tax from stripe
+        pst_tax = Stripe::TaxRate.retrieve(province.pst_tax_id)
+        if pst_tax.nil?
+          # the id is no longer valid, for example if manually delete from stripe dashboard
+          pst_tax = createProvinceTax(province, TYPE_PST)
+        elsif pst_tax.percentage.to_d != province.PST.to_d * 100
+          # we changed the tax rate in our database (or in stripe), so update them to be the same.
+          pst_tax = updateProvinceTax(province, TYPE_PST, pst_tax)
+        end
+      end
+      # finally add the tax id!
+      tax_ids << pst_tax.id
     end
-    if !province.HST.nil? && province.HST != 0.0
-      hst_rate = Stripe::TaxRate.create({
-                                          display_name: "HST",
-                                          inclusive:    false,
-                                          percentage:   province.HST * 100,
-                                          country:      "CA",
-                                          state:        province.abbreviation
-                                        })
-      tax_ids << hst_rate.id
+
+    # get any hst
+    if !province.HST.nil? && province.HST.to_d != 0.0.to_d
+      hst_tax = nil
+      if province.hst_tax_id.nil? || province.hst_tax_id == ""
+        # has no tax created yet, so create
+        hst_tax = createProvinceTax(province, TYPE_HST)
+      else
+        # retrieve the tax from stripe
+        hst_tax = Stripe::TaxRate.retrieve(province.hst_tax_id)
+        if hst_tax.nil?
+          # the id is no longer valid, for example if manually delete from stripe dashboard
+          hst_tax = createProvinceTax(province, TYPE_HST)
+        elsif hst_tax.percentage.to_d != province.HST.to_d * 100
+          # we changed the tax rate in our database (or in stripe), so update them to be the same.
+          hst_tax = updateProvinceTax(province, TYPE_HST, hst_tax)
+        end
+      end
+      # finally add the tax id!
+      tax_ids << hst_tax.id
     end
 
     # build the list items to send to stripe
@@ -110,5 +160,80 @@ class CheckoutController < ApplicationController
 
   def shipping
     @customer = user_signed_in? ? current_user.customer : Customer
+  end
+
+  def createProvinceTax(province, type)
+    tax_rate = nil
+    if type == TYPE_GST
+      tax_rate = Stripe::TaxRate.create({
+                                          display_name: "GST",
+                                          inclusive:    false,
+                                          percentage:   province.GST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      province.update(gst_tax_id: tax_rate.id)
+    end
+    if type == TYPE_PST
+      tax_rate = Stripe::TaxRate.create({
+                                          display_name: "PST",
+                                          inclusive:    false,
+                                          percentage:   province.PST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      province.update(pst_tax_id: tax_rate.id)
+    end
+    if type == TYPE_HST
+      tax_rate = Stripe::TaxRate.create({
+                                          display_name: "HST",
+                                          inclusive:    false,
+                                          percentage:   province.HST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      province.update(hst_tax_id: tax_rate.id)
+    end
+    tax_rate
+  end
+
+  def updateProvinceTax(province, type, oldTax)
+    tax_rate = nil
+    # deactivate the old tax as it is no longer used
+    Stripe::TaxRate.update(
+      oldTax.id,
+      { active: false }
+    )
+    if type == TYPE_GST
+      tax_rate = Stripe::TaxRate.create({
+                                          display_name: "GST",
+                                          inclusive:    false,
+                                          percentage:   province.GST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      province.update(gst_tax_id: tax_rate.id)
+    end
+    if type == TYPE_PST
+      tax_rate = Stripe::TaxRate.create({
+                                          display_name: "PST",
+                                          inclusive:    false,
+                                          percentage:   province.PST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      province.update(pst_tax_id: tax_rate.id)
+    end
+    if type == TYPE_HST
+      tax_rate = Stripe::TaxRate.create({
+                                          display_name: "HST",
+                                          inclusive:    false,
+                                          percentage:   province.HST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      province.update(hst_tax_id: tax_rate.id)
+    end
+    tax_rate
   end
 end
