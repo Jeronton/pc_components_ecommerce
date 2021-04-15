@@ -52,6 +52,8 @@ class CheckoutController < ApplicationController
     order = Order.find(session[:order_id])
     order.update(status: "unconfirmed_paid")
 
+    clear_cart
+
     # @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     # @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
 
