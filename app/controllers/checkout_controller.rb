@@ -50,7 +50,7 @@ class CheckoutController < ApplicationController
 
     # but still update the order status so that we at least know that the user attempted to submit payment
     order = Order.find(session[:order_id])
-    order.update(status: "unconfirmed_paid")
+    order.update(status: "unconfirmed_paid") if order.status == "unsubmitted"
 
     clear_cart
 

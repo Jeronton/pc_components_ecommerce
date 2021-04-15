@@ -46,7 +46,15 @@ class StripeWebhookController < ApplicationController
   end
 
   def fulfill_order(checkout_session)
-    # TODO: fill in with your own logic
-    puts "Setting order to paid for #{checkout_session.inspect}"
+    # puts "Setting order to paid for #{checkout_session.inspect}"
+
+    order = Order.find_by(stripe_session: checkout_session.id)
+    # Check if the order is already paid (i think normally will be, but not sure)
+    # if paid then mark order as paid otherwize mark as failed
+    if checkout_session.payment_status == "paid"
+      order.update(status: "paid")
+    else
+      order.update(status: "payment_failed")
+    end
   end
 end
