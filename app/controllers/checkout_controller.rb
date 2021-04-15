@@ -4,9 +4,9 @@ class CheckoutController < ApplicationController
     order = Order.find(session[:order_id])
 
     orderedProducts = order.order_products
-    puts "\n\n\n\n**************************\n\n\n"
-    puts orderedProducts.inspect
-    puts "\n\n***********\n\n"
+    # puts "\n\n\n\n**************************\n\n\n"
+    # puts orderedProducts.inspect
+    # puts "\n\n***********\n\n"
 
     productItems = []
     orderedProducts.each do |item|
@@ -35,6 +35,10 @@ class CheckoutController < ApplicationController
       line_items:           productItems
     )
 
+    # save the stripe session id
+    order.update(stripe_session: @session.id)
+
+    # send to stripe!
     respond_to do |format|
       format.js # render app/views/checkout/create.js.erb
     end
