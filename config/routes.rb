@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get "checkout/shipping"
   post "checkout/apply_shipping"
+  post "stripe_webhook/listener"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :products, only: %i[index show]
