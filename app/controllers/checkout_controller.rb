@@ -8,6 +8,41 @@ class CheckoutController < ApplicationController
     # puts orderedProducts.inspect
     # puts "\n\n***********\n\n"
 
+    # set the tax rate(s)
+    tax_ids = []
+    province = order.customer.province
+    if !province.GST.nil? && province.GST != 0.0
+      gst_rate = Stripe::TaxRate.create({
+                                          display_name: "GST",
+                                          inclusive:    false,
+                                          percentage:   province.GST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      tax_ids << gst_rate.id
+    end
+    if !province.PST.nil? && province.PST != 0.0
+      pst_rate = Stripe::TaxRate.create({
+                                          display_name: "PST",
+                                          inclusive:    false,
+                                          percentage:   province.PST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      tax_ids << pst_rate.id
+    end
+    if !province.HST.nil? && province.HST != 0.0
+      hst_rate = Stripe::TaxRate.create({
+                                          display_name: "HST",
+                                          inclusive:    false,
+                                          percentage:   province.HST * 100,
+                                          country:      "CA",
+                                          state:        province.abbreviation
+                                        })
+      tax_ids << hst_rate.id
+    end
+
+    # build the list items to send to stripe
     productItems = []
     orderedProducts.each do |item|
       product = item.product
@@ -16,7 +51,8 @@ class CheckoutController < ApplicationController
         description: product.description,
         amount:      item.price,
         currency:    "cad",
-        quantity:    item.quantity
+        quantity:    item.quantity,
+        tax_rates:   tax_ids
       }
     end
 
