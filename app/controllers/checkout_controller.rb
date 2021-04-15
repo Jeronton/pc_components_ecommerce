@@ -116,7 +116,8 @@ class CheckoutController < ApplicationController
     # @session.id <== is autopopulated from this process!
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ["card"],
-      success_url:          checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
+      success_url:          checkout_success_url,
+      # success_url:          checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url:           checkout_cancel_url,
       line_items:           productItems
     )
