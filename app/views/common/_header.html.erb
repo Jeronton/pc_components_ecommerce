@@ -18,6 +18,9 @@
           <li class="nav-item <%= 'active' if controller_name == 'sessions' && action_name  == 'destroy'%>">
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "nav-link" %>
           </li>
+          <li class="nav-item <%= 'active' if controller_name == 'orders' && action_name  == 'index' %>">
+            <%= link_to "Orders", orders_path, method: :get, class: "nav-link" %>
+          </li>
         <% else %>
           <li class="nav-item <%= 'active' if controller_name == 'sessions' && action_name  == 'new'%>">
             <%= link_to "Sign In", user_session_path, class: "nav-link" %>
