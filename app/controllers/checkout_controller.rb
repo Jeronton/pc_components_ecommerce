@@ -1,6 +1,6 @@
 class CheckoutController < ApplicationController
   def create
-    # get the in progress orser
+    # get the in progress order
     order = Order.find(session[:order_id])
 
     orderedProducts = order.order_products
@@ -49,6 +49,8 @@ class CheckoutController < ApplicationController
     # but the payment will be validated, and the order's status updated using stripes events.
 
     # but still update the order status so that we at least know that the user attempted to submit payment
+    order = Order.find(session[:order_id])
+    order.update(status: "unconfirmed_paid")
 
     # @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     # @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
