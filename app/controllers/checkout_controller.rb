@@ -1,16 +1,22 @@
 class CheckoutController < ApplicationController
   def create
-    # establish a connection with Stripe!
+    # get the in progress orser
+    order = Order.find(session[:order_id])
+
+    orderedProducts = order.order_products
+    puts "\n\n\n\n**************************\n\n\n"
+    puts orderedProducts.inspect
+    puts "\n\n***********\n\n"
 
     productItems = []
-    cart_items.each do |item|
-      product = item[:product]
+    orderedProducts.each do |item|
+      product = item.product
       productItems << {
         name:        product.name,
         description: product.description,
-        amount:      product.price,
+        amount:      item.price,
         currency:    "cad",
-        quantity:    item[:quantity]
+        quantity:    item.quantity
       }
     end
 
@@ -21,14 +27,13 @@ class CheckoutController < ApplicationController
       return
     end
 
+    # @session.id <== is autopopulated from this process!
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ["card"],
       success_url:          checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url:           checkout_cancel_url,
       line_items:           productItems
     )
-
-    # @session.id <== is autopopulated from this process!
 
     respond_to do |format|
       format.js # render app/views/checkout/create.js.erb

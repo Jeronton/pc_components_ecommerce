@@ -106,6 +106,9 @@ class OrdersController < ApplicationController
           HST:    hst
         )
 
+        # store order in session so we can add stripe session to it shortly
+        session[:order_id] = order.id
+
         redirect_to(order) if order.valid?
       end
     else
