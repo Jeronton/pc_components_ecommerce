@@ -39,6 +39,8 @@ class CheckoutController < ApplicationController
     # Just display a trustful success page, it will asume that if navigated to it was indeed a success!
     # but the payment will be validated, and the order's status updated using stripes events.
 
+    # but still update the order status so that we at least know that the user attempted to submit payment
+
     # @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     # @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
 
@@ -60,8 +62,6 @@ class CheckoutController < ApplicationController
   def shipping
     @customer = user_signed_in? ? current_user.customer : Customer
   end
-
-  def payment; end
 
   def apply_shipping
     # puts inputs.inspect
