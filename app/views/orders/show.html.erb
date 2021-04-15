@@ -1,4 +1,10 @@
-<h1>Order Invoice</h1>
+<h1>
+<% if @preOrder %>
+  Order Confirmation
+<% else %>
+  Order Invoice
+<% end %>
+</h1>
 <div class="card">
   <div class="card-head">
     <div class="container row">
@@ -15,7 +21,7 @@
         <% end %>
         <p>Total: <%= number_to_currency(@total.to_d / 100) %></p>
       </div>
-      <% if @linkToPayment %>
+      <% if @preOrder %>
         <div class="col-md">
           <%= button_to checkout_create_path, method: :create, remote: true, class: "btn btn-primary" do %>
             Proceed to Payment

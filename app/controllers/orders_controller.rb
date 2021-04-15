@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
       @gst = @order.GST
       @hst = @order.HST
       @subtotal = @total - @pst - @gst - @hst
-      @linkToPayment = @order.status == "unsubmitted"
+      @preOrder = @order.status == "unsubmitted"
     end
   end
 
