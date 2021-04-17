@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   using ApplicationHelper
   before_action :initialize_session
   helper_method :cart
+  helper_method :categories
 
   def initialize_session
     # shoping cart will be an array of product id's and their quantities
@@ -11,6 +12,11 @@ class ApplicationController < ActionController::Base
 
   def clear_cart
     session[:shopping_cart] = {}
+  end
+
+  # returns all the categories
+  def categories
+    Category.all
   end
 
   def cart
