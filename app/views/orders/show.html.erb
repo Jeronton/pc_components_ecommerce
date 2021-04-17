@@ -10,13 +10,13 @@
     <div class="container row">
       <div class="col-md">
         <p>Sub-Total: <%= number_to_currency(@subtotal.to_d / 100) %></p>
-        <% unless @gst.nil? %>
+        <% unless @gst.nil? || @gst == 0 %>
           <p>GST: <%= number_to_currency(@gst.to_d / 100) %></p>
         <% end %>
-        <% unless @pst.nil? %>
+        <% unless @pst.nil? || @pst == 0 %>
           <p>PST: <%= number_to_currency(@pst.to_d / 100) %></p>
         <% end %>
-        <% unless @hst.nil? %>
+        <% unless @hst.nil? || @hst == 0 %>
           <p>HST: <%= number_to_currency(@hst.to_d / 100) %></p>
         <% end %>
         <p>Total: <%= number_to_currency(@total.to_d / 100) %></p>
