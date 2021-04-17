@@ -12,12 +12,14 @@ class ProductsController < ApplicationController
     @products = @products.where(category_id: params[:category]) unless category_id < 0
 
     # if search paramerter exists, search by it
-    search_string = "%#{params['search'].downcase}%"
+    search_string = "%#{params['search'].downcase}%" unless params["search"].nil?
     unless params["search"].nil? || params["search"] == ""
       @products = @products.where(
         "LOWER(name) LIKE :search OR LOWER(description) LIKE :search",
         search: search_string
       )
+      # used re populate the search form
+      @searched_value = params["search"]
     end
     @products
   end

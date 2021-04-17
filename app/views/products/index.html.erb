@@ -8,12 +8,28 @@
     <form action="<%= products_path %>" class="form-inline">
       <div class="form-group">
         <label class="sr-only" for="search">Search Input</label>
-        <input type="text" id="search" name="search" placeholder="Search" class="form-control mb-2 mr-sm-1">
+        <input
+          type="text"
+          id="search"
+          name="search"
+          placeholder="Search"
+          class="form-control mb-2 mr-sm-1"
+          <% unless @searched_value.nil? %>
+            value="<%=@searched_value%>"
+          <% end %>
+        >
         <label class="sr-only" for="category">Search Filter Selection</label>
         <select class="form-control mb-2 mr-sm-1" id="category" name="category">
           <option value="-1">All Categories</option>
           <% categories.each do |category| %>
-            <option value="<%= category.id %>"><%= category.name %></option>
+            <option
+              value="<%= category.id %>"
+              <% if !@category.nil? &&@category.id == category.id %>
+                selected
+              <% end %>
+              >
+              <%= category.name %>
+            </option>
           <% end %>
         </select>
         <button type="submit" class="btn btn-primary mb-2">Search</button>
