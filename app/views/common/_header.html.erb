@@ -4,9 +4,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="productsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" type="button" id="productsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Products
-          </button>
+          </a>
           <div class="dropdown-menu" aria-labelledby="productsDropdown">
             <%= link_to "All Products", products_path, class: "dropdown-item" %>
             <% Category.all.each do |category| %>
