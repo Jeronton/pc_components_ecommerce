@@ -6,6 +6,7 @@ class ProductsController < ApplicationController
     rescue StandardError
       -1
     end
+    @category = Category.find(Integer(params[:category])) unless category_id < 0
     @products = @products.where(category_id: params[:category]) unless category_id < 0
   end
 

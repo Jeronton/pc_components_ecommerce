@@ -1,4 +1,9 @@
-<h1>Our Products</h1>
+<h1>
+  Our Products
+  <% unless @category.nil? %>
+    - <%= @category.name %>
+  <% end %>
+</h1>
 <div>
   <%= render partial: 'product',
              collection: @products,
