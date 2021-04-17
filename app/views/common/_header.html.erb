@@ -3,9 +3,17 @@
     <span class="navbar-brand">PC Components®</span>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item <%= 'active' if controller_name == 'products'%>">
-          <%= link_to "Products", products_path, class: "nav-link" %>
-        </li>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="productsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Products
+          </button>
+          <div class="dropdown-menu" aria-labelledby="productsDropdown">
+            <%= link_to "All Products", products_path, class: "dropdown-item" %>
+            <% Category.all.each do |category| %>
+              <%= link_to category.name, "#{products_path}?category=#{category.id}", class: "dropdown-item" %>
+            <% end %>
+          </div>
+        </div>
         <li class="nav-item <%= 'active' if controller_name == 'contact'%>">
           <%= link_to "Contact", 'contact', class: "nav-link" %>
         </li>
