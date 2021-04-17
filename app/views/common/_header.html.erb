@@ -9,7 +9,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="productsDropdown">
             <%= link_to "All Products", products_path, class: "dropdown-item" %>
-            <% Category.all.each do |category| %>
+            <% categories.each do |category| %>
               <%= link_to category.name, "#{products_path}?category=#{category.id}", class: "dropdown-item" %>
             <% end %>
           </div>

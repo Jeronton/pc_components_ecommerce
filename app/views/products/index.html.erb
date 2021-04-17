@@ -11,11 +11,10 @@
         <input type="text" id="search" name="search" placeholder="Search" class="form-control mb-2 mr-sm-1">
         <label class="sr-only" for="category">Search Filter Selection</label>
         <select class="form-control mb-2 mr-sm-1" id="category" name="category">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option value="-1">All Categories</option>
+          <% categories.each do |category| %>
+            <option value="<%= category.id %>"><%= category.name %></option>
+          <% end %>
         </select>
         <button type="submit" class="btn btn-primary mb-2">Search</button>
       </div>
