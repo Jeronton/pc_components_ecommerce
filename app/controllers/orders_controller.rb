@@ -1,9 +1,21 @@
 class OrdersController < ApplicationController
-  def index; end
+  def index
+    # where user can view past orders
+    if user_signed_in?
+      customer = current_user.customer
+
+      @orders = Order.where(customer: customer) unless customer.nil?
+    else
+      # redirect to login page
+      redirect_to new_user_session_path
+    end
+  end
 
   def show
     @order = Order.find(params[:id])
-    if @order.customer.id == session[:customer_id]
+    puts "\n\n\n\n\n\nORDER CUSTOMER ID #{@order.customer.id}"
+    puts "SESSION CUSTOMER ID #{session[:customer_id]}\n\n\n\n\n"
+    if (@order.customer.id == session[:customer_id]) || (user_signed_in? && @order.customer.id == current_user.customer.id)
       @orderProducts = @order.order_products
       @total = @order.total
       @pst = @order.PST
