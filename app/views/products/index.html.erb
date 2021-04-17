@@ -37,8 +37,17 @@
     </form>
 </div>
 
+
+<div class="container pl-0">
+  <%= paginate @products %>
+</div>
 <div>
-  <%= render partial: 'product',
-             collection: @products,
-             locals: { show_desc: false, show_add_cart: false, show_card: true } %>
+
+<%= render partial: 'product',
+            collection: @products,
+            locals: { show_desc: false, show_add_cart: false, show_card: true } %>
+
+</div>
+<div class="container mt-3 pl-0">
+  <%= paginate @products %>
 </div>
