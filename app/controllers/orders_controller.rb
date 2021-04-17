@@ -4,7 +4,9 @@ class OrdersController < ApplicationController
     if user_signed_in?
       customer = current_user.customer
 
-      @orders = Order.where(customer: customer) unless customer.nil?
+      unless customer.nil?
+        @orders = Order.where(customer: customer).where.not(status: "unsubmitted").order(created_at: :desc)
+      end
     else
       # redirect to login page
       redirect_to new_user_session_path
@@ -23,6 +25,7 @@ class OrdersController < ApplicationController
       @hst = @order.HST
       @subtotal = @total - @pst - @gst - @hst
       @preOrder = @order.status == "unsubmitted"
+      @status = @order.status
     end
   end
 

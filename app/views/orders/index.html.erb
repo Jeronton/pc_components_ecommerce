@@ -10,13 +10,20 @@
               <div class="card-body">
                 <%= link_to(order, class: "text-dark text-decoration-none") do %>
                   <div>
-                    <p class="mb-1">Order #: <%= order.stripe_session %></p>
                     <div class="row">
-                      <div class="col-md">
+                      <div class="col-lg-9">
+                        <p class="card-text mb-1">Order #: <%= order.stripe_session %></p>
+                      </div>
+                      <div class="col-lg">
+                        <p class="card-text text-lg-right">Order Status: <%= order.status %></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg">
                         <p class="card-text">Order Total: <%= number_to_currency(order.total.to_d / 100) %></p>
                       </div>
-                      <div class="col-md">
-                        <p class="card-text text-md-right">Order Date: <%= order.created_at.strftime("%b %d, %Y") %></p>
+                      <div class="col-lg">
+                        <p class="card-text text-lg-right">Order Date: <%= order.created_at.strftime("%b %d, %Y") %></p>
                       </div>
                     </div>
                   </div>

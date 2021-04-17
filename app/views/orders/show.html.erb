@@ -20,6 +20,9 @@
           <p>HST: <%= number_to_currency(@hst.to_d / 100) %></p>
         <% end %>
         <p>Total: <%= number_to_currency(@total.to_d / 100) %></p>
+        <% unless @preOrder %>
+          <p>Status: <%= @status %></p>
+        <% end %>
       </div>
       <% if @preOrder %>
         <div class="col-md">
