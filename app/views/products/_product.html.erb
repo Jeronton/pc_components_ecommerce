@@ -6,6 +6,8 @@
         <div class="col-md-3">
           <% if product.image_med.present? %>
             <%= image_tag product.image_med, class: 'img-thumbnail float-left' %>
+          <% else %>
+            <%= image_tag "No_Image_Available.jpg", class: 'img-thumbnail float-left' %>
           <% end%>
         </div>
         <div class="col-md-9">
@@ -23,7 +25,7 @@
             <% else %>
               <%= form_with url: cart_index_path, method: :post do |form| %>
                 <%= hidden_field_tag(:id, product.id)%>
-                <%= form.number_field :quantity, in: 1..999 %>
+                <%= form.number_field :quantity, in: 1..999, value: 1%>
                 <%= button_tag 'Add to Cart' %>
               <%end%>
             <%end%>
