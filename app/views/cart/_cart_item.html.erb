@@ -23,10 +23,8 @@
                 <%= hidden_field_tag(:hide_flash, true )%>
                 <div class="input-group mb-3" style="width: 15em;">
                   <%= form.number_field :quantity, in: 1..999, class: "form-control", value: cart_item[:quantity] %>
-                  <%# <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"> %>
                   <div class="input-group-append">
                     <%= button_tag 'Update Quantity', class: "btn btn-secondary" %>
-                    <%# <button class="btn btn-outline-secondary" type="button">Button</button> %>
                   </div>
                 </div>
               </div>
