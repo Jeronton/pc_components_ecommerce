@@ -1,38 +1,39 @@
-<h1>
-<% if @preOrder %>
-  Order Summary
-<% else %>
-  Order Invoice
-<% end %>
-</h1>
-<div class="card">
-  <div class="card-head">
-    <div class="container pt-3">
-      <p><strong>Sub-Total:</strong> <%= number_to_currency(@subtotal.to_d / 100) %></p>
-      <% unless @gst.nil? || @gst == 0 %>
-        <p><strong>GST:</strong> <%= number_to_currency(@gst.to_d / 100) %></p>
-      <% end %>
-      <% unless @pst.nil? || @pst == 0 %>
-        <p><strong>PST:</strong> <%= number_to_currency(@pst.to_d / 100) %></p>
-      <% end %>
-      <% unless @hst.nil? || @hst == 0 %>
-        <p><strong>HST:</strong> <%= number_to_currency(@hst.to_d / 100) %></p>
-      <% end %>
-      <p><strong>Total:</strong> <%= number_to_currency(@total.to_d / 100) %></p>
-      <% if @preOrder %>
-        <%= button_to checkout_create_path, method: :create, remote: true, class: "btn btn-primary" do %>
-          Proceed to Payment
+<div class="container">
+  <h1>
+  <% if @preOrder %>
+    Order Summary
+  <% else %>
+    Order Invoice
+  <% end %>
+  </h1>
+  <div class="card">
+    <div class="card-head">
+      <div class="container pt-3">
+        <p><strong>Sub-Total:</strong> <%= number_to_currency(@subtotal.to_d / 100) %></p>
+        <% unless @gst.nil? || @gst == 0 %>
+          <p><strong>GST:</strong> <%= number_to_currency(@gst.to_d / 100) %></p>
         <% end %>
-      <% else %>
-        <p><strong>Status:</strong> <%= @status %></p>
-      <% end %>
+        <% unless @pst.nil? || @pst == 0 %>
+          <p><strong>PST:</strong> <%= number_to_currency(@pst.to_d / 100) %></p>
+        <% end %>
+        <% unless @hst.nil? || @hst == 0 %>
+          <p><strong>HST:</strong> <%= number_to_currency(@hst.to_d / 100) %></p>
+        <% end %>
+        <p><strong>Total:</strong> <%= number_to_currency(@total.to_d / 100) %></p>
+        <% if @preOrder %>
+          <%= button_to checkout_create_path, method: :create, remote: true, class: "btn btn-primary" do %>
+            Proceed to Payment
+          <% end %>
+        <% else %>
+          <p><strong>Status:</strong> <%= @status %></p>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="card-body">
-    <%= render partial: 'invoice_item',
-          collection: @orderProducts,
-          as: :orderProduct %>
-  </div>
+    <div class="card-body">
+      <%= render partial: 'invoice_item',
+            collection: @orderProducts,
+            as: :orderProduct %>
+    </div>
 
+  </div>
 </div>
-
