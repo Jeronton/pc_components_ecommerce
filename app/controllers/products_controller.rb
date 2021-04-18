@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
       # used re populate the search form
       @searched_value = params["search"]
     end
-    @products = @products.page(params[:page]).per(3)
+    @products = @products.page(params[:page]).per(5)
   end
 
   def show
