@@ -1,49 +1,55 @@
 <div class="container">
-  <%= form_with model:  customer, url: url, method: method, remote: true do |form| %>
-    <div class="input-group">
-      <%= form.label :first_name, class: "input-group-text" %>
-      <%= form.text_field :first_name, class: "form-control" %>
+  <div class="row pt-5">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <%= form_with model:  customer, url: url, method: method, remote: true do |form| %>
+        <div class="input-group mb-2">
+          <%= form.label :first_name, class: "input-group-text col-4" %>
+          <%= form.text_field :first_name, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :middle_name, class: "input-group-text col-4" %>
+          <%= form.text_field :middle_name, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :last_name, class: "input-group-text col-4" %>
+          <%= form.text_field :last_name, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :address_line1, class: "input-group-text col-4" %>
+          <%= form.text_field :address_line1, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :address_line2, class: "input-group-text col-4" %>
+          <%= form.text_field :address_line2, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :country, class: "input-group-text col-4" %>
+          <%= form.text_field :country, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :province_id, class: "input-group-text col-4" %>
+          <%= form.collection_select  :province_id, Province.all, :id, :name, {}, {class: "custom-select"}%>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :city, class: "input-group-text col-4" %>
+          <%= form.text_field :city, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :postal, class: "input-group-text col-4" %>
+          <%= form.text_field :postal, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :email, class: "input-group-text col-4" %>
+          <%= form.email_field :email, class: "form-control col-8" %>
+        </div>
+        <div class="input-group mb-2">
+          <%= form.label :phone, class: "input-group-text col-4" %>
+          <%= form.phone_field :phone, class: "form-control col-8" %>
+        </div>
+        <%= button_tag 'Use this shipping info', class: "btn btn-primary w-100" %>
+      <%end%>
     </div>
-    <div class="input-group">
-      <%= form.label :middle_name, class: "input-group-text" %>
-      <%= form.text_field :middle_name, class: "form-control" %>
-    </div>
-    <div class="input-group">
-      <%= form.label :last_name, class: "input-group-text" %>
-      <%= form.text_field :last_name, class: "form-control" %>
-    </div>
-    <div class="input-group">
-      <%= form.label :address_line1, class: "input-group-text" %>
-      <%= form.text_field :address_line1, class: "form-control" %>
-    </div>
-    <div class="input-group">
-      <%= form.label :address_line2, class: "input-group-text" %>
-      <%= form.text_field :address_line2, class: "form-control" %>
-    </div>
-    <div class="input-group">
-      <%= form.label :country, class: "input-group-text" %>
-      <%= form.text_field :country, class: "form-control" %>
-    </div>
-    <div class="input-group">
-      <%= form.label :province_id, class: "input-group-text" %>
-      <%= form.collection_select  :province_id, Province.all, :id, :name, class: "custom-select", prompt: true %>
-    </div>
-    <div class="input-group">
-      <%= form.label :city, class: "input-group-text" %>
-      <%= form.text_field :city, class: "form-control" %>
-    </div>
-    <div class="input-group">
-      <%= form.label :postal, class: "input-group-text" %>
-      <%= form.text_field :postal, class: "form-control" %>
-    </div>
-    <div class="input-group">
-      <%= form.label :email, class: "input-group-text" %>
-      <%= form.email_field :email, class: "form-control" %>
-    </div>
-    <div class="input-group">
-      <%= form.label :phone, class: "input-group-text" %>
-      <%= form.phone_field :phone, class: "form-control" %>
-    </div>
-    <%= button_tag 'Use this shipping info', class: "btn btn-primary" %>
-  <%end%>
+    <div class="col-lg-2"></div>
+  </div>
 </div>

@@ -17,10 +17,10 @@ class StripeWebhookController < ApplicationController
       sig_header = request.env["HTTP_STRIPE_SIGNATURE"]
       payload = request.body.read
       event = Stripe::Webhook.construct_event(payload, sig_header, endpoint_secret)
-    rescue JSON::ParserError => e
+    rescue JSON::ParserError
       # Invalid payload
       return head 400
-    rescue Stripe::SignatureVerificationError => e
+    rescue Stripe::SignatureVerificationError
       # Invalid signature
       return head 400
     end

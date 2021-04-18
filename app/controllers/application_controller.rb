@@ -37,14 +37,14 @@ class ApplicationController < ActionController::Base
   # Gets the products from the session cart formated as an array of products
   def cart_products
     cart_products = []
-    cart.each do |id, quantity|
+    cart.each do |id, _quantity|
       cart_products << Product.find(id)
     end
     cart_products
   end
 
   # Ovverride where redirected to after sign in.
-  def after_sign_in_path_for(user)
+  def after_sign_in_path_for(_user)
     new_customer_path
   end
 end

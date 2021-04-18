@@ -1,36 +1,39 @@
-<% if show_card %>
-  <div class="card">
-    <div class="card-body">
-<% end %>
-      <div class="row">
-        <div class="col-md-3">
-          <% if product.image_med.present? %>
-            <%= image_tag product.image_med, class: 'img-thumbnail float-left' %>
-          <% end%>
-        </div>
-        <div class="col-md-9">
-          <h5 class="card-title"><%= link_to product.name, product%></h5>
-          <p class="card-text"><strong>Our low price: </strong><%= number_to_currency(product.price.to_d / 100) %></p>
-          <% if !show_desc.nil? && show_desc %>
-            <p class="card-text"><%= product.description%></p>
-          <% end %>
-          <p class="card-text"><strong>Category: </strong><%= product.category.name %></p>
-          <% if show_add_cart %>
-            <% if !cart[product.id.to_s].nil? %>
-              <%= button_to cart_path(product), method: :delete do %>
-                Remove From Cart
-              <% end%>
-            <% else %>
-              <%= form_with url: cart_index_path, method: :post do |form| %>
-                <%= hidden_field_tag(:id, product.id)%>
-                <%= form.number_field :quantity, in: 1..999 %>
-                <%= button_tag 'Add to Cart' %>
-              <%end%>
-            <%end%>
-          <% end %>
-        </div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3">
+        <% if product.image_med.present? %>
+          <%= image_tag product.image_med, class: 'img-thumbnail float-left' %>
+        <% else %>
+          <%= image_tag "No_Image_Available.jpg", class: 'img-thumbnail float-left' %>
+        <% end%>
       </div>
-<% if show_card %>
+      <div class="col-md-9">
+        <h5 class="card-title"><%= link_to product.name, product%></h5>
+        <p class="card-text"><strong>Our low price: </strong><%= number_to_currency(product.price.to_d / 100) %></p>
+        <% if !show_desc.nil? && show_desc %>
+          <p class="card-text"><%= product.description%></p>
+        <% end %>
+        <p class="card-text"><strong>Category: </strong><%= product.category.name %></p>
+        <% if show_add_cart %>
+          <% if !cart[product.id.to_s].nil? %>
+            <%= button_to cart_path(product), method: :delete, class: "btn btn-primary" do %>
+              Remove From Cart
+            <% end%>
+          <% else %>
+            <%= form_with url: cart_index_path, method: :post do |form| %>
+              <%= hidden_field_tag(:id, product.id)%>
+              <div class="input-group mb-3" style="width: 15em;">
+                  <%= form.number_field :quantity, in: 1..999, class: "form-control", value: 1 %>
+                  <div class="input-group-append">
+                    <%= button_tag 'Add to Cart', class: "btn btn-primary"%>
+                  </div>
+                </div>
+            <%end%>
+          <%end%>
+        <% end %>
+      </div>
     </div>
   </div>
-<% end %>
+</div>

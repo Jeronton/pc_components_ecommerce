@@ -1,29 +1,42 @@
 
 <div class="card">
   <div class="card-body">
-      <%= render partial: 'products/product',
-                  object: cart_item[:product],
-                  locals: { show_desc: true, show_add_cart: false, show_card: false } %>
     <div class="row">
       <div class="col-md-3">
+        <% if cart_item[:product].image_med.present? %>
+          <%= image_tag cart_item[:product].image_med, class: 'img-thumbnail float-left' %>
+        <% else %>
+          <%= image_tag "No_Image_Available.jpg", class: 'img-thumbnail float-left' %>
+        <% end%>
       </div>
       <div class="col-md-9">
-          <div class="form-group row">
-            <%= form_with url: cart_index_path, method: :post, class: "cal-md-auto form-group row" do |form| %>
-              <%= hidden_field_tag(:id, cart_item[:product].id)%>
-              <%= hidden_field_tag(:hide_flash, true )%>
-              <%= form.number_field :quantity, in: 1..999, class: "col-sm-3 form_control", value: cart_item[:quantity] %>
-              <div class="col-sm-auto">
-                <%= button_tag 'Update Quantity', class: "btn btn-secondary" %>
+        <h5 class="card-title"><%= link_to cart_item[:product].name, cart_item[:product]%></h5>
+        <p class="card-text"><strong>Our low price: </strong><%= number_to_currency(cart_item[:product].price.to_d / 100) %></p>
+        <p class="card-text"><%= cart_item[:product].description%></p>
+        <p class="card-text"><strong>Category: </strong><%= cart_item[:product].category.name %></p>
+        <%# update cart section %>
+        <div class="">
+          <div class="d-lg-flex justify-content-between">
+            <%= form_with url: cart_index_path, method: :post, class: "" do |form| %>
+              <div class="">
+                <%= hidden_field_tag(:id, cart_item[:product].id)%>
+                <%= hidden_field_tag(:hide_flash, true )%>
+                <div class="input-group mb-3" style="width: 15em;">
+                  <%= form.number_field :quantity, in: 1..999, class: "form-control", value: cart_item[:quantity] %>
+                  <div class="input-group-append">
+                    <%= button_tag 'Update Quantity', class: "btn btn-secondary" %>
+                  </div>
+                </div>
               </div>
             <%end%>
-            <div class="col-md-auto">
+            <div class="">
               <%= form_with url: cart_path(cart_item[:product]), method: :delete do |form| %>
                 <%= hidden_field_tag(:hide_flash, true )%>
-                <%= button_tag 'Remove From Card', class: "btn btn-secondary" %>
+                <%= button_tag 'Remove From Cart', class: "btn btn-secondary" %>
               <% end %>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>

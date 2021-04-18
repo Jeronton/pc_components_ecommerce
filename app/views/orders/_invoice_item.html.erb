@@ -5,6 +5,8 @@
       <div class="col-md-3">
         <% if orderProduct.product.image_med.present? %>
           <%= image_tag orderProduct.product.image_med, class: 'img-thumbnail float-left' %>
+        <% else %>
+          <%= image_tag "No_Image_Available.jpg", class: 'img-thumbnail float-left' %>
         <% end%>
       </div>
       <div class="col-md-9">
